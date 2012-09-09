@@ -35,6 +35,9 @@ No FAQ.
 
 == Changelog ==
 
+= 1.0.1 =
+* Update readme.txt.
+
 = 1.0 =
 * First version.
 
