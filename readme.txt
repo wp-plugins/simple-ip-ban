@@ -12,6 +12,8 @@ Simple IP Ban is a lightweight ip / user agent ban plugin.
 
 IP Ban is a security plugin, protects your site accessing from unwanted ip  addresses or user agents. You can add ip addresses or user agents creating your own black list. 
 
+It also good for protecting from unwanted crawlers, which uses your resource and bandwidth. Just add an ip address or user agent and things will happened.  
+
 After the plugin activation, in the SETTINGS menu you'll see  the Simple IP BAN submenu. Here you have 3 textareas:
 1.  Add ip address here. 
 2.  Add user agents here.
