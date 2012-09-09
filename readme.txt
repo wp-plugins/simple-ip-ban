@@ -31,7 +31,7 @@ No FAQ.
 
 == Screenshots ==
 
-simple-ip-ban-screenshot.png
+1. Settings page.
 
 == Changelog ==
 
