@@ -1,0 +1,16 @@
+#simple-ip-list {
+    overflow: hidden;
+}
+
+#simple-ip-list textarea {
+    width: 600px;
+    height: 200px;
+}
+
+#simple-ip-list input {
+    width: 600px;
+}
+
+#simple-ip-list label {
+    font-weight: bold;  
+}
