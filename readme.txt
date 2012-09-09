@@ -4,7 +4,7 @@ Donate link: http://sandorkovacs84.wordpress.com/
 Tags: ip ban, user agent ban
 Requires at least: 3.1.0
 Tested up to: 3.4.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Simple IP Ban is a lightweight ip / user agent ban plugin. 
 
