@@ -30,19 +30,29 @@ function register_simple_ip_ban_submenu_page() {
 
 function simple_ip_ban_callback() {
 
-    if ($_POST['submit']) {
-        $ip_list      = $_POST['ip_list'];
-        $ua_list      = $_POST['user_agent_list'];
-        $redirect_url = $_POST['redirect_url'];
+    // By Default activate do not redirect for logged in users
+    if (!get_option('s_not_for_logged_in_user'))    update_option('s_not_for_logged_in_user', 1);
 
-        update_option('s_ip_list',      $ip_list);
-        update_option('s_ua_list',      $ua_list);
-        update_option('s_redirect_url', $redirect_url);
+    // form submit  and save values
+    if ($_POST['submit']) {
+        $ip_list                = $_POST['ip_list'];
+        $ua_list                = $_POST['user_agent_list'];
+        $redirect_url           = $_POST['redirect_url'];
+        $not_for_logged_in_user = $_POST['not_for_logged_in_user'];
+
+        update_option('s_ip_list',                $ip_list);
+        update_option('s_ua_list',                $ua_list);
+        update_option('s_redirect_url',           $redirect_url);
+        update_option('s_not_for_logged_in_user', $not_for_logged_in_user);
     }
+
+    // read values from option table
 
     $ip_list      = get_option('s_ip_list');
     $ua_list      = get_option('s_ua_list');
     $redirect_url = get_option('s_redirect_url');
+    $not_for_logged_in_user = (intval(get_option('s_not_for_logged_in_user')) == 1 ) ? 1 : 0;
+
 
 ?>
 
@@ -53,6 +63,10 @@ function simple_ip_ban_callback() {
         <?php _e('Add ip address or/and user agents in the textareas. Add only 1 item per line. 
         You may specify a redirect url; when a user from a banned ip/user agent access your site, 
         he will be redirected to the specified URL.' ) ?>
+    </p>    
+
+    <p>
+        <?php _e('or add an IP RANGE, ex:  <strong>82.11.22.100-82.11.22-177</strong>' ) ?>
     </p>
 
     <form action="" method="post">
@@ -73,6 +87,15 @@ function simple_ip_ban_callback() {
             value='<?php echo $redirect_url; ?>' 
             placeholder='<?php _e('Enter a valid URL') ?>' />
     <p>
+    <p>
+    <label for='not-for-logged-in-user'><?php _e('Do Not Redirect for Logged In User'); ?></label> <br/>
+    <input  type='checkbox' name='not_for_logged_in_user' id='not-for-logged-in-user' 
+            value='1' 
+            <?php echo ($not_for_logged_in_user == 1 )  ? " checked='checked'" : "" ?>
+             />
+             <br/>
+             <small><?php _e('If this box is checked the IP BAN will be disabled for logged in users.') ?></small>
+    <p>
 
     <p>
         <input type='submit' name='submit' value='<?php _e('Save') ?>' />
@@ -90,6 +113,14 @@ function simple_ip_ban_callback() {
 
 
 function simple_ip_ban() {
+
+    // Do nothing for admin user
+    if ((is_user_logged_in() && is_admin()) ||
+        (intval(get_option('s_not_for_logged_in_user')) == 1  && is_user_logged_in())) return '';
+
+
+
+
     $remote_ip = $_SERVER['REMOTE_ADDR'];
     $remote_ua = $_SERVER['HTTP_USER_AGENT'];
     if (s_check_ip_address($remote_ip, get_option('s_ip_list')) || 
@@ -112,9 +143,34 @@ function simple_ip_ban() {
 function s_check_ip_address($ip, $ip_list) {
     
     $list_arr = explode("\r\n", $ip_list);
+
+    // Check for exact IP
     if (in_array($ip, $list_arr)) return true;
 
+    // Check in IP range
+    foreach ($list_arr as $k => $v) {
+        if (substr_count($v, '-')) {
+            // It's an ip range
+            $curr_ip_range = explode('-', $v);
+            if (ip2long($ip) >= ip2long(trim($curr_ip_range[0])) && 
+                ip2long($ip) <= ip2long(trim($curr_ip_range[1] ))) return true;
+        }   
+    }
 
+    // echo '<pre>';
+    // var_dump($list_arr);
+    // echo '</pre>';
+// die;
+
+/*
+function checkIP($user_ip, $lower_ip, $upper_ip) {
+$lower = ip2long($lower_ip);
+$upper = ip2long($upper_ip);
+$user = ip2long($user_ip);
+return ( ($user>=$lower) && ($user<=$upper) );
+}
+
+*/
     return false;
 }
 
