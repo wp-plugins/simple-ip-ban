@@ -3,8 +3,8 @@ Contributors: almos20
 Donate link: http://sandorkovacs84.wordpress.com/
 Tags: ip ban, user agent ban, protection, anti-spam
 Requires at least: 3.1.0
-Tested up to: 3.4.2
-Stable tag: 1.1.0
+Tested up to: 3.8.0
+Stable tag: 1.2.0
 
 Simple IP Ban is a lightweight ip / user agent ban plugin. 
 
@@ -43,6 +43,15 @@ No FAQ.
 1. Settings page.
 
 == Changelog ==
+
+= 1.2.0 = 
+* Fix: Too many redirects - http://wordpress.org/support/topic/too-many-redirects-22
+
+= 1.1.8 = 
+* Update for WordPress 3.8
+
+= 1.1.1 = 
+* Update for WordPress 3.5.1
 
 = 1.1. =
 * Add IP Range to the banned IPs list. ex: 82.11.22.100-82.11.22-177
