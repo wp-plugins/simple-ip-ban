@@ -4,7 +4,7 @@ Plugin Name: Simple IP Ban
 Plugin URI: http://www.sandorkovacs.ro/ip-ban-wordpress-plugin/
 Description: Ban one or more Ip Address or User Agents. Also you may add an IP RANGE to iplist ex: 82.11.22.100-82.11.22-177
 Author: Sandor Kovacs
-Version: 1.1.8
+Version: 1.2.0
 Author URI: http://sandorkovacs.ro/
 */
 
@@ -126,6 +126,8 @@ function simple_ip_ban() {
     if (s_check_ip_address($remote_ip, get_option('s_ip_list')) || 
         s_check_user_agent($remote_ua,get_option('s_ua_list'))) {
         $redirect_url = get_option('s_redirect_url');
+	if ( simple_ip_ban_get_current_url() == $redirect_url ) return '';  //suggested by umchal
+
         wp_redirect( $redirect_url );
         exit;
     }
@@ -157,20 +159,6 @@ function s_check_ip_address($ip, $ip_list) {
         }   
     }
 
-    // echo '<pre>';
-    // var_dump($list_arr);
-    // echo '</pre>';
-// die;
-
-/*
-function checkIP($user_ip, $lower_ip, $upper_ip) {
-$lower = ip2long($lower_ip);
-$upper = ip2long($upper_ip);
-$user = ip2long($user_ip);
-return ( ($user>=$lower) && ($user<=$upper) );
-}
-
-*/
     return false;
 }
 
@@ -181,4 +169,21 @@ function s_check_user_agent($ua, $ua_list) {
     if (in_array($ua, $list_arr)) return true;
 
     return false;
+}
+
+
+// Suggested solution by umchal
+// Support link: http://wordpress.org/support/topic/too-many-redirects-22
+
+function simple_ip_ban_get_current_url() {
+	$pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+	if ($_SERVER["SERVER_PORT"] != "80")
+	{
+	    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	}
+	else
+	{
+	    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	}
+	return $pageURL;
 }
