@@ -4,7 +4,7 @@ Plugin Name: Simple IP Ban
 Plugin URI: http://www.sandorkovacs.ro/ip-ban-wordpress-plugin/
 Description: Ban one or more Ip Address or User Agents. Also you may add an IP RANGE to iplist ex: 82.11.22.100-82.11.22-177
 Author: Sandor Kovacs
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://sandorkovacs.ro/
 */
 
