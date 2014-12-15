@@ -3,8 +3,8 @@ Contributors: almos20
 Donate link: http://sandorkovacs84.wordpress.com/
 Tags: ip ban, user agent ban, protection, anti-spam
 Requires at least: 3.1.0
-Tested up to: 3.8.1
-Stable tag: 1.2.1
+Tested up to: 4.0.1
+Stable tag: 1.2.5
 
 Simple IP Ban is a lightweight ip / user agent ban plugin. 
 
@@ -43,6 +43,19 @@ No FAQ.
 1. Settings page.
 
 == Changelog ==
+
+= 1.2.5 = 
+* Fix: Warning: Missing argument 2 for wp_kses() error message (2 posts) - https://wordpress.org/support/topic/warning-missing-argument-2-for-wp_kses-error-message
+
+= 1.2.4 = 
+* Add CSRF protection and sanitize user input
+* [Test] WordPress 4.0.1
+
+= 1.2.3 = 
+* [Test] WordPress 4.0
+
+= 1.2.2 = 
+* [Test] WordPress 3.9.1
 
 = 1.2.1 = 
 * Fix: Notice: Undefined index: submit in ip-ban.php on line 37 - http://wordpress.org/support/topic/notice-undefined-index-submit-in-ip-banphp-on-line-37
